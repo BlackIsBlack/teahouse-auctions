@@ -1,0 +1,132 @@
+:root{
+    --main: #5eaaa8;
+    --light: #a3d2ca;
+    --cardcol: #ccebe6;
+    --dark: #0b515c;
+    --darker: #03323a;
+    --beige: #e8ded2;
+    --lighter: #e9f8f6;
+}
+body{
+    background-color: var(--lighter);
+}
+.btn-default{
+    background-color: var(--light);
+    color: var(--dark);
+}
+.btn-primary{
+    background-color: var(--dark);
+    color: var(--light);
+}
+.item-btn{
+    background-color: var(--main) !important;
+    color: var(--lighter) !important;
+}
+.navbar-custom{
+    background-color: var(--dark);     
+}
+.navbar-custom .navbar-brand, 
+.navbar-custom .navbar-text ,.nav-link{
+    color: var(--light);
+}
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+color: var(--main);
+}
+
+.padded{
+    padding-right: 15px;
+}
+.navbar-toggler-icon {
+    background-image: url(../img/hamburger.svg);
+}
+.formCheck{
+    padding-left: 20px;
+}
+.card{
+    background-color: var(--cardcol);
+    color: var(--dark);
+}
+.card-img-bottom{
+    height: 200px;
+    object-fit: contain;
+    padding-bottom: 8px
+}
+.product-img{
+    max-height:200px;
+    max-width:100%;
+    min-height: 91px;
+    height:auto;
+    width:auto;
+    display: block;
+    margin: auto;
+    object-fit: cover;
+    padding: 15px;;
+}
+.recent-img{
+    max-height:150px;
+}
+.listed-item{
+    padding: 20px 10px 20px 30px;
+    min-height: 240px;
+}
+.recent-item{
+    padding: 10px 10px 10px 20px;
+    min-height: 170px;
+}
+.hot{
+    background-color: rgba(253, 0, 0, 0.05);
+}
+.hot-title{
+    text-align: center;
+    padding-top: 8px
+}
+.hotbtn{
+    float: right;
+}
+.footbar{
+    background-color: var(--dark);
+    color: var(--light);
+}
+.shaded{
+    background-color:rgba(0, 0, 0, 0.04)
+}
+.sell-img{
+    height: 230px !important;
+    margin: auto;
+}
+.review-text{
+    resize: none;
+}
+.right-align{
+    text-align: right;
+    float: left;
+    padding-left: 50px;
+    padding-top: 10px;
+}
+.detail-btn{
+    padding-right: 30px;
+    padding-bottom: 14px;
+}
+
+.carousel {
+  width: 100%;
+}
+
+.slide-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: .5rem;
+}
+.star{
+    padding-left: 5px;
+    float:right;
+}
+p,h3{
+    color: var(--dark)
+}

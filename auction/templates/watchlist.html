@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div style="padding:15px" class="col">
+        <div class="listing card">
+            <div class="card-header">
+                <h4>My Watchlist</h4>
+                <form class="form-inline">
+                    <label style="padding-right:10px;" for="sortBy">Sort By:</label>
+                    <select style="width: auto" id="sortBy" name="sortBy" class="form-control">
+                        <option value="1">Bids (High to Low)</option>
+                        <option value="2">Bids (Low to High)</option>
+                        <option value="3">Current Bid (High to Low)</option>
+                        <option value="4">Current Bid (Low to High)</option>
+                        <option value="5">New</option>
+                    </select>
+
+                </form>
+
+
+            </div>
+
+            <div class="card-block listed-item">
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="row">
+
+                            <div class="col">
+                                <h5>Random Tea</h5>
+                                <p><strong>Origin: </strong>India<br>
+                                    <strong>Oxidation: </strong>Black<br>
+                                    <strong>Packing: </strong>Tea Bag<br><br>
+                                    <strong>Current Bid: </strong>$7.99 <u>(14 Bids)</u>
+                                </p>
+                                <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
+                            </div>
+                            <div class="col">
+                                <h5>Watchlist Information:</h5>
+                                <p><strong>Added on: </strong> 19/09/2020<br>
+                                    <strong>Ending: </strong> 14/10/2020 8:00am<br>
+                                    <strong>Bid Status: </strong> Winning
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img class="product-img" src="/static/image/teabag.jpg">
+                    </div>
+                </div>
+            </div>
+            <div class="card-block listed-item shaded">
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="row">
+
+                            <div class="col">
+                                <h5>Random Tea</h5>
+                                <p><strong>Origin: </strong>Chine<br>
+                                    <strong>Oxidation: </strong>Green<br>
+                                    <strong>Packing: </strong>Loose Leaf<br><br>
+                                    <strong>Current Bid: </strong>$19.87 <u>(11 Bids)</u>
+                                </p>
+                                <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
+                            </div>
+                            <div class="col">
+                                <h5>Watchlist Information:</h5>
+                                <p><strong>Added on: </strong> 19/09/2020<br>
+                                    <strong>Ending: </strong> 14/10/2020 8:00am<br>
+                                    <strong>Bid Status: </strong> Winning
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img class="product-img" src="/static/image/green.jpg">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-block listed-item">
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="row">
+
+                            <div class="col">
+                                <h5>Random Tea</h5>
+                                <p><strong>Origin: </strong>India<br>
+                                    <strong>Oxidation: </strong>Black<br>
+                                    <strong>Packing: </strong>Tea Bag<br><br>
+                                    <strong>Current Bid: </strong>$7.99 <u>(14 Bids)</u>
+                                </p>
+                                <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
+                            </div>
+                            <div class="col">
+                                <h5>Watchlist Information:</h5>
+                                <p><strong>Added on: </strong> 19/09/2020<br>
+                                    <strong>Ending: </strong> 14/10/2020 8:00am<br>
+                                    <strong>Bid Status: </strong> No Bid Placed
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img class="product-img" src="/static/image/teabag.jpg">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-block listed-item shaded">
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="row">
+
+                            <div class="col">
+                                <h5>Random Tea</h5>
+                                <p><strong>Origin: </strong>Kenya<br>
+                                    <strong>Oxidation: </strong>Black<br>
+                                    <strong>Packing: </strong>Loose Leaf<br><br>
+                                    <strong>Current Bid: </strong>$16.87 <u>(11 Bids)</u>
+                                </p>
+                                <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
+                            </div>
+                            <div class="col">
+                                <h5>Watchlist Information:</h5>
+                                <p><strong>Added on: </strong> 19/09/2020<br>
+                                    <strong>Ending: </strong> 14/10/2020 8:00am<br>
+                                    <strong>Bid Status: </strong> Losing
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img class="product-img" src="/static/image/looseleaf.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .carousel-item {
+            background-color: var(--darker);
+        }
+    </style>
+{% endblock %}
+    
