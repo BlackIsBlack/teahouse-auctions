@@ -1,12 +1,32 @@
 from . import db
 from flask_login import UserMixin
+from datetime import datetime
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     __table_args__ = {'extend_existing': True} 
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(100), index=True, unique= True, nullable=False)
-    emailId = db.Column(db.String(100), index = True, nullable = False)
+    username = db.Column(db.String(100), index=True, unique= True, nullable=False)
+    email = db.Column(db.String(100), index = True, nullable = False)
     password_hash = db.Column(db.String(255),nullable=False)
+    contact_number = db.Column(db.String(20), unique = True)
 
-    comments = db.relationship('Comment', backref='user')
+class Watchlist(db.model):
+    __tablename__ = 'watchlist'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', nullable=False))
+    date_added =  db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    total_bids = db.Column(db.Integer, db.ForeignKey('auctionListing.total_bids') nullable=False)
+    bid_status = db.Column(db.Integer, db.ForeignKey('auctionListing.bid_status'), nullable=False)
+    highest_bid = db.Column(db.Float, nullable=False)
+
+class Bid(db.model):
+    __tablename__ = 'bid'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer, primary_key = True)
+    listing_id = db.Column(db.Integer, db.ForeignKey('auctionListing.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    bid_amount = db.Column(db.Float, nullable=False)
+    bid_time = db.Column(db.DateTime, default=datetime.now())
+    bid_status = db.Column(db.Integer, nullable = False)
