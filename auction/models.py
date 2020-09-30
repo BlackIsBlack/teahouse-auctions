@@ -11,17 +11,17 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(255),nullable=False)
     contact_number = db.Column(db.String(20), unique = True)
 
-class Watchlist(db.model):
+class Watchlist(db.Model):
     __tablename__ = 'watchlist'
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id', nullable=False))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     date_added =  db.Column(db.DateTime, default=datetime.now(), nullable=False)
-    total_bids = db.Column(db.Integer, db.ForeignKey('auctionListing.total_bids') nullable=False)
+    total_bids = db.Column(db.Integer, db.ForeignKey('auctionListing.total_bids'), nullable=False)
     bid_status = db.Column(db.Integer, db.ForeignKey('auctionListing.bid_status'), nullable=False)
     highest_bid = db.Column(db.Float, nullable=False)
 
-class Bid(db.model):
+class Bid(db.Model):
     __tablename__ = 'bid'
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key = True)
