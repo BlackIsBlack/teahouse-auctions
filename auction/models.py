@@ -10,3 +10,24 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(255),nullable=False)
 
     comments = db.relationship('Comment', backref='user')
+
+class auctionListing(db.Model):
+    __tablename__ = 'auctionListing'
+    __table_args__ = {'extend_existing': True} 
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    start_time = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    end_time = db.Column(db.DateTime, nullable=False)
+    starting_bid = db.Column(db.Float, nullable=False) #make 0 minimum
+    current_bid = db.Column(db.Float, nullable=False) #same as above
+    photos_url = db.Column(db.String())
+    description = db.Column(db.String(255))
+    weight = db.Column(db.Float, nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    tea_name = db.Column(db.String(60), nullable=False)
+    origin_country = db.Column(db.String(60), nullable=False)
+    oxidation = db.Column(db.String(60), nullable=False)
+    packing = db.Column(db.String(60), nullable=False)
+    bid_status = db.Column(db.Integer, nullable=False)
+    highest_bid = db.Column(db.Float, nullable=False)
+    total_bids = db.Column(db.Integer, nullable=False)
