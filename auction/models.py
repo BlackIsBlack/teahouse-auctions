@@ -30,7 +30,6 @@ class Bid(db.Model):
     bid_amount = db.Column(db.Float, nullable=False)
     bid_time = db.Column(db.DateTime, default=datetime.now())
     bid_status = db.Column(db.Integer, nullable = False)
-    comments = db.relationship('Comment', backref='user')
 
 class auctionListing(db.Model):
     __tablename__ = 'auctionListing'
