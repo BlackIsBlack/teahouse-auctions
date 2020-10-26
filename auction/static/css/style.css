@@ -25,6 +25,9 @@ body{
 .navbar-custom{
     background-color: var(--dark);     
 }
+.form{
+    padding: 20px 60px 20px 60px;
+}
 .navbar-custom .navbar-brand, 
 .navbar-custom .navbar-text ,.nav-link{
     color: var(--light);

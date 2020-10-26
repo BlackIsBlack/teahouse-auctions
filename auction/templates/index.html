@@ -315,73 +315,25 @@
                     </form>
                 </div>
 
+                {% for item in items %}
                 <div class="card-block listed-item">
                     <div class="row">
                         <div class="col">
-                            <h5>Random Tea</h5>
-                            <p><strong>Origin: </strong>India<br>
-                                <strong>Oxidation: </strong>Black<br>
-                                <strong>Packing: </strong>Tea Bag<br><br>
-                                <strong>Current Bid: </strong>$7.99 <u>(14 Bids)</u>
+                            <h5>{{item.title}}</h5>
+                            <p><strong>Origin: </strong>{{item.origin_country}}<br>
+                                <strong>Oxidation: </strong>{{item.oxidation}}<br>
+                                <strong>Packing: </strong>{{item.packing}}<br><br>
+                                <strong>Current Bid: </strong>${{item.current_bid}} <u>({{item.total_bids}} Bids)</u>
                             </p>
-                            <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
+                            <a href="/tea/{{item.id}}" class="btn btn-default item-btn">View Item</a>
                         </div>
                         <div class="col">
-                            <img class="product-img" src="/static/image/teabag.jpg">
+                            <img class="product-img" src="{{item.photos_url}}">
                         </div>
                     </div>
                 </div>
-
-                <div class="card-block listed-item shaded">
-                    <div class="row">
-                        <div class="col">
-                            <h5>Random Tea</h5>
-                            <p><strong>Origin: </strong>Kenya<br>
-                                <strong>Oxidation: </strong>Black<br>
-                                <strong>Packing: </strong>Loose Leaf<br><br>
-                                <strong>Current Bid: </strong>$16.87 <u>(11 Bids)</u>
-                            </p>
-                            <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
-                        </div>
-                        <div class="col">
-                            <img class="product-img" src="/static/image/looseleaf.jpg">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-block listed-item">
-                    <div class="row">
-                        <div class="col">
-                            <h5>Random Tea</h5>
-                            <p><strong>Origin: </strong>India<br>
-                                <strong>Oxidation: </strong>Black<br>
-                                <strong>Packing: </strong>Tea Bag<br><br>
-                                <strong>Current Bid: </strong>$7.99 <u>(6 Bids)</u>
-                            </p>
-                            <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
-                        </div>
-                        <div class="col">
-                            <img class="product-img" src="/static/image/teabag.jpg">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-block listed-item shaded">
-                    <div class="row">
-                        <div class="col">
-                            <h5>Random Tea</h5>
-                            <p><strong>Origin: </strong>Kenya<br>
-                                <strong>Oxidation: </strong>Black<br>
-                                <strong>Packing: </strong>Loose Leaf<br><br>
-                                <strong>Current Bid: </strong>$16.87 <u>(2 Bids)</u>
-                            </p>
-                            <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
-                        </div>
-                        <div class="col">
-                            <img class="product-img" src="/static/image/looseleaf.jpg">
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
+                
             </div>
             <div style="height: 30px;"></div>
         </div>
