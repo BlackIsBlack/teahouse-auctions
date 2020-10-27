@@ -19,9 +19,8 @@ class RegisterForm(FlaskForm):
     user_name=StringField("User Name", validators=[InputRequired()])
     email_id = StringField("Email Address", validators=[Email("Please enter a valid email")])
     contact_num = StringField("Contact Number", validators=[InputRequired()])
-    
-    #add buyer/seller - check if it is a buyer or seller hint : Use RequiredIf field
 
+    address = StringField('Address', validators=[InputRequired()])
 
     #linking two fields - password should be equal to data entered in confirm
     password=PasswordField("Password", validators=[InputRequired(),

@@ -1,14 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
+from sqlalchemy import desc
 from .forms import ItemForm
-from .models import auctionListing, User
+from .models import auctionListing, User, Bid
 import os
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 from . import db
 bp = Blueprint('tea', __name__, url_prefix='/tea')
-
-
 
   # a new function
 def check_upload_file(form):
@@ -23,16 +22,18 @@ def check_upload_file(form):
 
 @bp.route('/<id>')
 def display(id):
-  try:
-    currentItem = auctionListing.query.filter_by(id=id).first()
-    remainingTime = (currentItem.end_time - datetime.now())
-    if(remainingTime < timedelta(0)):
-      currentItem.bid_status = 0
-      db.session.commit()
-    userName = User.query.filter_by(id=currentItem.user_id).first().username
-    return render_template('items/details.html', auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName)
-  except:
-    return render_template('errorpage.html')
+  currentItem = auctionListing.query.filter_by(id=id).first()
+  remainingTime = (currentItem.end_time - datetime.now())
+  if(remainingTime < timedelta(0)):
+    currentItem.bid_status = 0
+    db.session.commit()
+  userName = User.query.filter_by(id=currentItem.user_id).first().username
+
+  bidList = []
+
+  if(current_user.id == currentItem.user_id):
+    bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
+  return render_template('items/details.html', auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList)
 
 @bp.route('/<id>/delete')
 def delete(id):

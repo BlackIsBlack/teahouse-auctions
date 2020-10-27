@@ -10,6 +10,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(100), index = True, nullable = False)
     password_hash = db.Column(db.String(255),nullable=False)
     contact_number = db.Column(db.String(20), unique = True)
+    address = db.Column(db.String(200), nullable=False)
 
 class Watchlist(db.Model):
     __tablename__ = 'watchlist'
@@ -49,5 +50,4 @@ class auctionListing(db.Model):
     oxidation = db.Column(db.String(60), nullable=False)
     packing = db.Column(db.String(60), nullable=False)
     bid_status = db.Column(db.Integer, nullable=False)
-    highest_bid = db.Column(db.Float, nullable=False)
     total_bids = db.Column(db.Integer, nullable=False)
