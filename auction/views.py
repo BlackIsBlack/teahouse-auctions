@@ -1,5 +1,5 @@
-from flask import Blueprint
-from flask import render_template
+from flask import Blueprint, render_template, request
+from sqlalchemy import desc
 from .models import auctionListing
 from flask_login import login_required, current_user
 bp = Blueprint('main', __name__)
@@ -7,11 +7,19 @@ bp = Blueprint('main', __name__)
 
 @bp.route('/')
 def index():
-    auctionItems = auctionListing.query.all()
-    return render_template('index.html', items = auctionItems)
+    auctionItems = auctionListing.query.filter_by(bid_status = 1).order_by(desc(auctionListing.start_time))
+    hotItem = auctionItems.order_by(desc(auctionListing.total_bids)).first()
+    recentlySold = auctionListing.query.filter_by(bid_status = 0).order_by(desc(auctionListing.end_time)).first()
+    return render_template('index.html', items = auctionItems, hotItem = hotItem, recentlySold = recentlySold)
 
 @bp.route('/watchlist')
 @login_required
 def watchlist():
     return render_template('watchlist.html')
 
+@bp.route('/profile')
+@login_required
+def profile():
+    activeUserListings = auctionListing.query.filter_by(user_id = current_user.id, bid_status=1)
+    completedUserListings = auctionListing.query.filter_by(user_id = current_user.id, bid_status=0)
+    return render_template('profile.html', myActiveListings=activeUserListings, myCompletedListings = completedUserListings)

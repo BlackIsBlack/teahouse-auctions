@@ -33,7 +33,7 @@ class RegisterForm(FlaskForm):
 
 class ItemForm(FlaskForm):
     title = StringField('Title', validators=[InputRequired()])
-    teaName = StringField('Tea Name', validators=[InputRequired()])
+    teaName = StringField('Ingredients', validators=[InputRequired()])
     country = SelectField('Country of Origin', choices=getListContents('countries'), validators=[InputRequired()])
     oxidation = SelectField('Oxidation', choices=getListContents('oxides'), validators=[InputRequired()])
     packingType = SelectField('Packing', choices=getListContents('packing'), validators=[InputRequired()])

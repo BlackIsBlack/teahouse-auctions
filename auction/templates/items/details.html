@@ -26,7 +26,18 @@
         <div class="col-lg">
             <div class="card h-100">
                 <div class="card-header">
-                    <h3>{{auctionListing.title}}</h3>
+                    <div class="row">
+                        <div class="col">
+                            <h3>{{auctionListing.title}}</h3>
+                        </div>
+                        <div class="col">
+                            {% if current_user.id == auctionListing.user_id %}
+                            <a style="width: 180px; float: right;" href="#" class="btn btn-default item-btn">View Bids</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    
                 </div>
                 <div class="row">
                     <p class="right-align">
@@ -34,16 +45,25 @@
                         Oxidation: <b>{{auctionListing.oxidation}}</b><br>
                         Packing: <b>{{auctionListing.packing}}</b><br>
                         Weight: <b>{{auctionListing.weight}}g</b><br><br>
+                        {% if auctionListing.bid_status ==1 %}
                         Remaining Time: <b>{{timeLeft}}</b>
+                        {% else %}
+                        Remaining Time: <b>Bidding Concluded</b>
+                        {% endif %}
                     </p>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col">
                         <p style="padding-left:40px;" class="right-align">
-                            Current Bid: <b>{{auctionListing.highest_bid}}</b>
+                            {% if auctionListing.bid_status == 1 %}
+                            Current Bid: <b>${{auctionListing.highest_bid}}</b>
+                            {% else %}
+                            Winning Bid: <b>${{auctionListing.highest_bid}}</b>
+                            {% endif %}
                         </p>
                     </div>
+                    {% if auctionListing.bid_status == 1 %}
                     <div class="col">
                         <div class="detail-btn row justify-content-end">
                             <a style="width: 180px;" href="#" class="btn btn-default item-btn" data-toggle="modal"
@@ -53,6 +73,7 @@
                             <a style="width: 180px;" href="#" class="btn btn-default item-btn">Add To Watchlist</a>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -64,6 +85,7 @@
                     <h4>Item Description</h4>
                 </div>
                 <div class="card-body">
+                    <h4>Auctioned By: {{username}}</h4> 
                     <p>{{auctionListing.description}}</p>
                 </div>
             </div>

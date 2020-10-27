@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-3" style="padding-bottom: 40px;">
+        <div class="card h-100" style="margin:20px;">
+            <img class="card-img-top" src="/static/image/profile.jpg">
+            <div class="card-body">
+                <h4 class="card-title">{{current_user.username}}</h5>
+                <b>Email:</b> {{current_user.email}}<br>
+                <b>Contact Number:</b> {{current_user.contact_number}}
+            </div>
+        </div>
+
+    </div>
+    <div class="col" style="padding-bottom: 40px;">
+        <div class="card" style="margin:20px">
+            <h3 class="card-header">My Active Listings</h3>
+            <div class="card-body">
+            {% for listing in myActiveListings %}
+            <div class="card-block listed-item">
+                <div class="row">
+                    <div class="col">
+                        <h5>{{listing.title}}</h5>
+                        <p><strong>Origin: </strong>{{listing.origin_country}}<br>
+                            <strong>Oxidation: </strong>{{listing.oxidation}}<br>
+                            <strong>Packing: </strong>{{listing.packing}}<br><br>
+                            <strong>Current Bid: </strong>${{listing.current_bid}} <u>({{listing.total_bids}} Bids)</u>
+                        </p>
+                        <a href="/tea/{{listing.id}}" class="btn btn-default item-btn">View Item</a>
+                        <a href="/tea/{{listing.id}}/delete" class="btn btn-danger">Delete Item</a>
+                    </div>
+                    <div class="col">
+                        <img class="product-img" src="{{listing.photos_url}}">
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="card" style="margin:20px">
+            <h3 class="card-header">My Completed Listings</h3>
+            <div class="card-body">
+            {% for listing in myCompletedListings %}
+            <div class="card-block listed-item">
+                <div class="row">
+                    <div class="col">
+                        <h5>{{listing.title}}</h5>
+                        <p><strong>Origin: </strong>{{listing.origin_country}}<br>
+                            <strong>Oxidation: </strong>{{listing.oxidation}}<br>
+                            <strong>Packing: </strong>{{listing.packing}}<br><br>
+                            <strong>Winning Bid: </strong>${{listing.current_bid}} <u>({{listing.total_bids}} Bids)</u>
+                        </p>
+                        <a href="/tea/{{listing.id}}" class="btn btn-default item-btn">View Item</a>
+                        <a href="/tea/{{listing.id}}/delete" class="btn btn-danger">Delete Item</a>
+                    </div>
+                    <div class="col">
+                        <img class="product-img" src="{{listing.photos_url}}">
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
