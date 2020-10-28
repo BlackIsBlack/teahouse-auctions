@@ -22,19 +22,22 @@ def check_upload_file(form):
 
 @bp.route('/<id>')
 def display(id):
-  currentItem = auctionListing.query.filter_by(id=id).first()
-  remainingTime = (currentItem.end_time - datetime.now())
-  if(remainingTime < timedelta(0)):
-    currentItem.bid_status = 0
-    db.session.commit()
-  userName = User.query.filter_by(id=currentItem.user_id).first().username
+  try:
+    currentItem = auctionListing.query.filter_by(id=id).first()
+    remainingTime = (currentItem.end_time - datetime.now())
+    if(remainingTime < timedelta(0)):
+      currentItem.bid_status = 0
+      db.session.commit()
+    userName = User.query.filter_by(id=currentItem.user_id).first().username
 
-  bidList = []
-  if(current_user.is_authenticated):
-    if(current_user.id == currentItem.user_id):
-      bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
-    
-  return render_template('items/details.html', auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList)
+    bidList = []
+    if(current_user.is_authenticated):
+      if(current_user.id == currentItem.user_id):
+        bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
+      
+    return render_template('items/details.html', auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList)
+  except:
+    return render_template('errorpage.html')
 
 @bp.route('/<id>/delete')
 @login_required
