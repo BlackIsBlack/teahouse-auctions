@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 from sqlalchemy import desc
-from .models import auctionListing
+from .models import auctionListing, Watchlist
 from flask_login import login_required, current_user
 bp = Blueprint('main', __name__)
 
@@ -18,7 +18,10 @@ def index():
 def watchlist():
     watchlistItems = Watchlist.query.filter_by(user_id=current_user.id)
 
-    return render_template('watchlist.html', items=watchlistItems)
+    watchlistedAuctionItems = []
+    for item in watchlistItems:
+        watchlistedAuctionItems += auctionListing.query.filter_by(id=item.item_id)
+    return render_template('watchlist.html', items=watchlistedAuctionItems)
 
 @bp.route('/profile')
 @login_required

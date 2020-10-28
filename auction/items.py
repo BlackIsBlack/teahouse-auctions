@@ -58,7 +58,7 @@ def watchlist(id):
     if(currentItem.id == item.item_id):
       inWatchlist = True
   if(inWatchlist == False):
-    watchlistItem = auctionListing(item_id=currentItem.id, user_id=current_user.id, date_added=datetime.now(), total_bids=currentItem.total_bids, bid_status=currentItem.bid_status, highest_bid=currentItem.highest_bid)
+    watchlistItem = Watchlist(item_id=currentItem.id, user_id=current_user.id, date_added=datetime.now(), total_bids=currentItem.total_bids, bid_status=currentItem.bid_status, highest_bid=currentItem.current_bid)
     db.session.add(watchlistItem)
     db.session.commit()
   return(redirect(url_for('main.watchlist')))
