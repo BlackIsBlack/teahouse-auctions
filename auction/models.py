@@ -16,6 +16,7 @@ class Watchlist(db.Model):
     __tablename__ = 'watchlist'
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
+    item_id = db.Column(db.Integer, db.ForeignKey('auctionListing.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     date_added =  db.Column(db.DateTime, default=datetime.now(), nullable=False)
     total_bids = db.Column(db.Integer, db.ForeignKey('auctionListing.total_bids'), nullable=False)
