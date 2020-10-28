@@ -347,7 +347,7 @@
                 <h5 class="hot-title card-title">{{hotItem.title}}</h5>
                 <img src="{{hotItem.photos_url}}" class="card-img-bottom" alt="{{hotItem.title}}">
                 <div class="card-footer">
-                    <span><b>Current Bid: </b>${{hotItem.current_bid}} </span><a href="/tea/{{hotItem.id}}" class="hotbtn btn btn-danger">View Item</a>
+                    <span><b>Current Bid: </b>${{hotItem.current_bid}} (<u>{{hotItem.total_bids}} Bids</u>)</span><a href="/tea/{{hotItem.id}}" class="hotbtn btn btn-danger">View Item</a>
                 </div>
             </div>
             <div style="height: 30px;"></div>

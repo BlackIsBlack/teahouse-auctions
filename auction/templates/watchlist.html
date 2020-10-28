@@ -18,24 +18,24 @@
 
 
             </div>
-
+            {% for item in items %}
             <div class="card-block listed-item">
                 <div class="row">
                     <div class="col-lg">
                         <div class="row">
 
                             <div class="col">
-                                <h5>Random Tea</h5>
-                                <p><strong>Origin: </strong>India<br>
-                                    <strong>Oxidation: </strong>Black<br>
-                                    <strong>Packing: </strong>Tea Bag<br><br>
-                                    <strong>Current Bid: </strong>$7.99 <u>(14 Bids)</u>
+                                <h5>{{item.title}}</h5>
+                                <p><strong>Origin: </strong>{{item.origin_country}}<br>
+                                    <strong>Oxidation: </strong>{{item.oxidation}}<br>
+                                    <strong>Packing: </strong>{{item.packing}}<br><br>
+                                    <strong>Current Bid: </strong>${{item.highest_bid}}<u>(14 Bids)</u>
                                 </p>
-                                <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
+                                <a href="/tea/{{item.id}}" class="btn btn-default item-btn">View Item</a>
                             </div>
                             <div class="col">
                                 <h5>Watchlist Information:</h5>
-                                <p><strong>Added on: </strong> 19/09/2020<br>
+                                <p><strong>Added on: </strong> {{item.date_added}}<br>
                                     <strong>Ending: </strong> 14/10/2020 8:00am<br>
                                     <strong>Bid Status: </strong> Winning
 
@@ -44,99 +44,11 @@
                         </div>
                     </div>
                     <div class="col">
-                        <img class="product-img" src="/static/image/teabag.jpg">
+                        <img class="product-img" src="{{item.photos_url}}">
                     </div>
                 </div>
             </div>
-            <div class="card-block listed-item shaded">
-                <div class="row">
-                    <div class="col-lg">
-                        <div class="row">
-
-                            <div class="col">
-                                <h5>Random Tea</h5>
-                                <p><strong>Origin: </strong>Chine<br>
-                                    <strong>Oxidation: </strong>Green<br>
-                                    <strong>Packing: </strong>Loose Leaf<br><br>
-                                    <strong>Current Bid: </strong>$19.87 <u>(11 Bids)</u>
-                                </p>
-                                <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
-                            </div>
-                            <div class="col">
-                                <h5>Watchlist Information:</h5>
-                                <p><strong>Added on: </strong> 19/09/2020<br>
-                                    <strong>Ending: </strong> 14/10/2020 8:00am<br>
-                                    <strong>Bid Status: </strong> Winning
-
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <img class="product-img" src="/static/image/green.jpg">
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-block listed-item">
-                <div class="row">
-                    <div class="col-lg">
-                        <div class="row">
-
-                            <div class="col">
-                                <h5>Random Tea</h5>
-                                <p><strong>Origin: </strong>India<br>
-                                    <strong>Oxidation: </strong>Black<br>
-                                    <strong>Packing: </strong>Tea Bag<br><br>
-                                    <strong>Current Bid: </strong>$7.99 <u>(14 Bids)</u>
-                                </p>
-                                <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
-                            </div>
-                            <div class="col">
-                                <h5>Watchlist Information:</h5>
-                                <p><strong>Added on: </strong> 19/09/2020<br>
-                                    <strong>Ending: </strong> 14/10/2020 8:00am<br>
-                                    <strong>Bid Status: </strong> No Bid Placed
-
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <img class="product-img" src="/static/image/teabag.jpg">
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-block listed-item shaded">
-                <div class="row">
-                    <div class="col-lg">
-                        <div class="row">
-
-                            <div class="col">
-                                <h5>Random Tea</h5>
-                                <p><strong>Origin: </strong>Kenya<br>
-                                    <strong>Oxidation: </strong>Black<br>
-                                    <strong>Packing: </strong>Loose Leaf<br><br>
-                                    <strong>Current Bid: </strong>$16.87 <u>(11 Bids)</u>
-                                </p>
-                                <a href="/tea/1" class="btn btn-default item-btn">View Item</a>
-                            </div>
-                            <div class="col">
-                                <h5>Watchlist Information:</h5>
-                                <p><strong>Added on: </strong> 19/09/2020<br>
-                                    <strong>Ending: </strong> 14/10/2020 8:00am<br>
-                                    <strong>Bid Status: </strong> Losing
-
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <img class="product-img" src="/static/image/looseleaf.jpg">
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from sqlalchemy import desc
 from .forms import ItemForm
-from .models import auctionListing, User, Bid
+from .models import auctionListing, User, Bid, Watchlist
 import os
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
@@ -44,6 +44,21 @@ def delete(id):
     db.session.delete(currentItem)
     db.session.commit()
   return (redirect(url_for('main.profile')))
+
+@bp.route('/<id>/watchlist')
+@login_required
+def watchlist(id):
+  currentItem = auctionListing.query.filter_by(id=id).first()
+  watchlistItems = Watchlist.query.filter_by(user_id=current_user.id)
+  inWatchlist = False
+  for item in watchlistItems:
+    if(currentItem.id == item.item_id):
+      inWatchlist = True
+  if(inWatchlist == False):
+    watchlistItem = auctionListing(item_id=currentItem.id, user_id=current_user.id, date_added=datetime.now(), total_bids=currentItem.total_bids, bid_status=currentItem.bid_status, highest_bid=currentItem.highest_bid)
+    db.session.add(watchlistItem)
+    db.session.commit()
+  return(redirect(url_for('main.watchlist')))
 
 @bp.route('/sell', methods = ['GET','POST'])
 @login_required
