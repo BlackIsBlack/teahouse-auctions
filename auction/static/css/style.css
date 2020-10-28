@@ -41,7 +41,7 @@ color: var(--main);
     padding-right: 15px;
 }
 .navbar-toggler-icon {
-    background-image: url(../img/hamburger.svg);
+    background-image: url(../image/hamburger.svg);
 }
 .formCheck{
     padding-left: 20px;

@@ -57,9 +57,9 @@
                     <div class="col">
                         <p style="padding-left:40px;" class="right-align">
                             {% if auctionListing.bid_status == 1 %}
-                            Current Bid: <b>${{auctionListing.highest_bid}}</b>
+                            Current Bid: <b>${{auctionListing.current_bid}}</b>
                             {% else %}
-                            Winning Bid: <b>${{auctionListing.highest_bid}}</b>
+                            Winning Bid: <b>${{auctionListing.current_bid}}</b>
                             {% endif %}
                         </p>
                     </div>

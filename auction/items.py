@@ -30,12 +30,14 @@ def display(id):
   userName = User.query.filter_by(id=currentItem.user_id).first().username
 
   bidList = []
-
-  if(current_user.id == currentItem.user_id):
-    bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
+  if(current_user.is_authenticated):
+    if(current_user.id == currentItem.user_id):
+      bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
+    
   return render_template('items/details.html', auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList)
 
 @bp.route('/<id>/delete')
+@login_required
 def delete(id):
   currentItem = auctionListing.query.filter_by(id=id).first()
   if(current_user.id == currentItem.user_id):

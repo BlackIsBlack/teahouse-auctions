@@ -9,7 +9,7 @@ bp = Blueprint('main', __name__)
 def index():
     auctionItems = auctionListing.query.filter_by(bid_status = 1).order_by(desc(auctionListing.start_time))
     hotItem = auctionItems.order_by(desc(auctionListing.total_bids)).first()
-    recentlySold = auctionListing.query.filter_by(bid_status = 0).order_by(desc(auctionListing.end_time)).first()
+    recentlySold = auctionListing.query.filter(auctionListing.current_bid != 0).filter_by(bid_status = 0).order_by(desc(auctionListing.end_time)).first()
     
     return render_template('index.html', items = auctionItems, hotItem = hotItem, recentlySold = recentlySold)
 
