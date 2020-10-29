@@ -9,7 +9,8 @@ from datetime import datetime, timedelta
 from . import db
 bp = Blueprint('tea', __name__, url_prefix='/tea')
 
-  # a new function
+
+# Image upload function
 def check_upload_file(form):
   fp=form.photos.data
   filename=fp.filename
@@ -20,61 +21,110 @@ def check_upload_file(form):
   fp.save(upload_path)
   return db_upload_path
 
+
+# Display information function
 @bp.route('/<id>')
 def display(id):
+  #attempt to retrieve information and display item
   try:
+    # Check current item to display
     currentItem = auctionListing.query.filter_by(id=id).first()
+
+    # Check/Update bid status to show Remaining Time on bid
     remainingTime = (currentItem.end_time - datetime.now())
     if(remainingTime < timedelta(0)):
       currentItem.bid_status = 0
       db.session.commit()
-    userName = User.query.filter_by(id=currentItem.user_id).first().username
 
+    # Check if item was created by logged in user then display all previous bids if relevent
+    userName = User.query.filter_by(id=currentItem.user_id).first().username
     bidList = []
     if(current_user.is_authenticated):
       if(current_user.id == currentItem.user_id):
         bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
-      
+
+    # Display the current item   
     return render_template('items/details.html', auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList)
+
+  # Send to error page if anything fails 
   except:
     return render_template('errorpage.html')
 
+
+# Item delete function
 @bp.route('/<id>/delete')
 @login_required
 def delete(id):
+  # Query the current item
   currentItem = auctionListing.query.filter_by(id=id).first()
+  # Delete the item if the user who added the item is the same as the logged in user
   if(current_user.id == currentItem.user_id):
     db.session.delete(currentItem)
     db.session.commit()
+  # Return to the homepage
   return (redirect(url_for('main.profile')))
 
+
+# User Watchlist page function
 @bp.route('/<id>/watchlist')
 @login_required
 def watchlist(id):
+  # Queries to store information on the currentntly viewing item and the items in the watchlist
   currentItem = auctionListing.query.filter_by(id=id).first()
   watchlistItems = Watchlist.query.filter_by(user_id=current_user.id)
   inWatchlist = False
+
+  # Checking if the current item matches items in the the watchlist
   for item in watchlistItems:
     if(currentItem.id == item.item_id):
       inWatchlist = True
+  
+  # Add the current item to the watchlist if it is not already there
   if(inWatchlist == False):
-    watchlistItem = Watchlist(item_id=currentItem.id, user_id=current_user.id, date_added=datetime.now(), total_bids=currentItem.total_bids, bid_status=currentItem.bid_status, highest_bid=currentItem.current_bid)
+    watchlistItem = Watchlist(item_id=currentItem.id, user_id=current_user.id, date_added=datetime.now(), total_bids=currentItem.total_bids, bid_status=currentItem.bid_status)
     db.session.add(watchlistItem)
     db.session.commit()
+
+  # Send the user the the watchlist
   return(redirect(url_for('main.watchlist')))
 
+
+# Remove from watchlist function
+@bp.route('/watchlist/remove/<id>')
+@login_required
+def remove(id):
+  # Queries the current item from the watchlist
+  watchlistItem = Watchlist.query.filter_by(user_id=current_user.id).filter_by(item_id=id).first()
+
+  db.session.delete(watchlistItem)
+  db.session.commit()
+  # Send the user the the watchlist
+  return(redirect(url_for('main.watchlist')))
+
+
+# Sell Item page function
 @bp.route('/sell', methods = ['GET','POST'])
 @login_required
 def sell():
+    # Generate form to input information
     print('Method Type: ', request.method)
     form = ItemForm()
+
+    # Run upon checking the submission is valid
     if form.validate_on_submit():
+      # Store infomation to generate the end time of the bid
         hoursPassed = form.duration.data
         hoursAdded = timedelta(hours = hoursPassed)
+        # Store the file path for the uploaded item image
         db_file_path=check_upload_file(form)
 
+        # Generate and add the data the the auctionListing table in the database
         teaItem = auctionListing(user_id=current_user.id, start_time=datetime.now(), end_time=(datetime.now()+hoursAdded), starting_bid=form.startBid.data, current_bid=0,photos_url=db_file_path,description= form.description.data, weight=form.weight.data,title=form.title.data,tea_name=form.teaName.data,origin_country=form.country.data,oxidation=form.oxidation.data,packing=form.packingType.data,bid_status=1,total_bids=0)
         db.session.add(teaItem)
         db.session.commit()
+
+        # Send the user to the details page for the recently created item
         return redirect(str(teaItem.id))
+
+    # Display the sell item form
     return render_template('items/listItem.html', form=form)
