@@ -13,7 +13,8 @@
                                 <div class="card-body">
                                     <h5>Country of origin</h5>
                                     <select id="originInput" name="originInput" class="form-control">
-                                        <option value="Afganistan">Afghanistan</option>
+                                        <option value="null">N/A</option>
+                                        <option value="Afghanistan">Afghanistan</option>
                                         <option value="Albania">Albania</option>
                                         <option value="Algeria">Algeria</option>
                                         <option value="American Samoa">American Samoa</option>
@@ -267,26 +268,29 @@
                             <article class="card-group-item">
                                 <div class="card-body">
                                     <h5>Oxidation</h5>
-
                                     <div class="formCheck">
-                                        <input type="checkbox" id="WhiteFilter">
+                                        <input type="checkbox" name="White" id="WhiteFilter">
                                         <label class="form-check-label" for="WhiteFilter">White</label>
                                     </div>
                                     <div class="formCheck">
-                                        <input type="checkbox" id="YellowFilter">
+                                        <input type="checkbox" name="Yellow" id="YellowFilter">
                                         <label class="form-check-label" for="YellowFilter">Yellow</label>
                                     </div>
                                     <div class="formCheck">
-                                        <input type="checkbox" id="BlackFilter">
+                                        <input type="checkbox" name="Black" id="BlackFilter">
                                         <label class="form-check-label" for="BlackFilter">Black</label>
                                     </div>
                                     <div class="formCheck">
-                                        <input type="checkbox" id="OolongFilter">
+                                        <input type="checkbox" name="Oolong" id="OolongFilter">
                                         <label class="form-check-label" for="OolongFilter">Oolong</label>
                                     </div>
                                     <div class="formCheck">
-                                        <input type="checkbox" id="GreenFilter">
+                                        <input type="checkbox" name="Green" id="GreenFilter">
                                         <label class="form-check-label" for="GreenFilter">Green</label>
+                                    </div>
+                                    <div class="formCheck">
+                                        <input type="checkbox" name="Herbal" id="HerbalFilter">
+                                        <label class="form-check-label" for="HerbalFilter">Herbal</label>
                                     </div>
                                 </div>
                             </article>
@@ -298,52 +302,33 @@
                                     <h5>Packing</h5>
     
                                     <div class="formCheck">
-                                        <input type="checkbox" name="teabagFilter" id="bagFilter">
+                                        <input type="checkbox" name="Teabag" id="bagFilter">
                                         <label class="form-check-label" for="bagFilter">Teabag</label>
                                     </div>
                                     <div class="formCheck">
-                                        <input type="checkbox" name="looseleafFilter" id="looseFilter">
+                                        <input type="checkbox" name="Loose Leaf" id="looseFilter">
                                         <label class="form-check-label" for="looseFilter">Loose Leaf</label>
                                     </div>
                                     <div class="formCheck">
-                                        <input type="checkbox" name="tisaneFilter" id="TisaneFilter">
+                                        <input type="checkbox" name="Tisane" id="TisaneFilter">
                                         <label class="form-check-label" for="TisaneFilter">Tisane</label>
                                     </div>
                                     <div class="formCheck">
-                                        <input type="checkbox" name="teabagFilter" id="BlossomFilter">
+                                        <input type="checkbox" name="Blossom" id="BlossomFilter">
                                         <label class="form-check-label" for="BlossomFilter">Blossom</label>
                                     </div>
                                 </div>
+                                
                             </article>
-                        </div>
-                        <div class="col-lg-10">
                             <article class="card-group-item">
                                 <div class="card-body">
-                                    <h5>Weight</h5>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="customRadio1" name="ltFilter" checked class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio1">Less Than</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="customRadio2" name="gtFilter" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio2">Greater Than</label>
-                                    </div>
-                                    <select id="weightFilter" name="weightFilter" class="form-control">
-                                        <option>100g</option>
-                                        <option>250g</option>
-                                        <option>500g</option>
-                                        <option>750g</option>
-                                        <option>1kg</option>
-                                        <option>2kg</option>
-                                        <option>3kg</option>
-                                    </select>
-                                    
+                            <input type="submit" class="btn btn-default" value="Filter">
                                 </div>
                             </article>
                         </div>
+                        
                     </div>
-                    <input type="submit" value="Filter">
-                </form>
+                    
                 
             </div>
             <div style="height: 30px;"></div>
@@ -353,15 +338,16 @@
             <div class="listing card">
                 <div class="card-header">
                     <h4>Active Listings </h4>
-                    <form class="form-inline">
                         <label style="padding-right:10px;" for="sortBy">Sort By:</label>
                         <select style="width: auto" id="sortBy" name="sortBy" class="form-control">
-                            <option value="1">Bids (High to Low)</option>
-                            <option value="2">Bids (Low to High)</option>
-                            <option value="3">Current Bid (High to Low)</option>
-                            <option value="4">Current Bid (Low to High)</option>
-                            <option value="5">New</option>
+                            <option value="1">Newest</option>
+                            <option value="2">Oldest</option>
+                            <option value="3">Total Bids (High to Low)</option>
+                            <option value="4">Total Bids (Low to High)</option>
+                            <option value="5">Current Bid (High to Low)</option>
+                            <option value="6">Current Bid (Low to High)</option>
                         </select>
+                        <input style = "margin-left:10px;" type="submit" class="btn btn-default" value="Sort">
 
                     </form>
                 </div>
