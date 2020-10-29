@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from sqlalchemy import desc
-from .forms import ItemForm
+from .forms import ItemForm, BidForm
 from .models import auctionListing, User, Bid, Watchlist
 import os
 from werkzeug.utils import secure_filename
@@ -20,9 +20,10 @@ def check_upload_file(form):
   fp.save(upload_path)
   return db_upload_path
 
-@bp.route('/<id>')
+@bp.route('/<id>', methods = ['GET','POST'])
 def display(id):
-  try:
+  # try:
+
     currentItem = auctionListing.query.filter_by(id=id).first()
     remainingTime = (currentItem.end_time - datetime.now())
     if(remainingTime < timedelta(0)):
@@ -36,9 +37,17 @@ def display(id):
         bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
     
     ingredientList = currentItem.tea_name.split(',')
-    return render_template('items/details.html', auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList, ingredients=ingredientList)
-  except:
-    return render_template('errorpage.html')
+
+    form = BidForm()
+    print("yeet")
+    if form.validate_on_submit():
+        bidQuery = Bid(user_id = current_user.id, listing_id = currentItem.id, bid_amount = form.bidAmount.data, bid_time = datetime.now(), bid_status = 1)
+        db.session.add(bidQuery)
+        db.session.commit()
+
+    return render_template('items/details.html', form=form, auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList, ingredients=ingredientList)
+  # except:
+  #   return render_template('errorpage.html')
 
 @bp.route('/<id>/delete')
 @login_required

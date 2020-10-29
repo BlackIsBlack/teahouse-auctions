@@ -42,3 +42,7 @@ class ItemForm(FlaskForm):
     startBid = DecimalField('Starting Bid',places=3,validators=[InputRequired(), NumberRange(0,9999)])
     duration = IntegerField('Auction Duration (Hours)', validators=[InputRequired(), NumberRange(0,9999)])
     submit = SubmitField('Submit')
+
+class BidForm(FlaskForm):
+    bidAmount = StringField('Bid Amount', validators=[InputRequired()])
+    submit = SubmitField('Place Bid')

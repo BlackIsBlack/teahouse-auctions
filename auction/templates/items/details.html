@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
+
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
+    
+    <!-- {{wtf.quick_form(form)}} -->
+                    
 
     <div style="padding: 15px 30px 15px 30px;" class="row">
         <div class="col-lg-7">
@@ -36,8 +41,6 @@
                             {% endif %}
                         </div>
                     </div>
-                    
-                    
                 </div>
                 <div class="row">
                     <p class="right-align">
@@ -158,20 +161,11 @@
                     <b>Shipping: </b>$4.99
 
                     </p>
-                    <form>
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">$</div>
-                            </div>
-                            <input type="number" class="form-control" id="inlineFormInputGroup"
-                                placeholder="Enter bid amount">
-                        </div>
-                    </form>
+                    {{wtf.quick_form(form)}}
+
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Place Bid</button>
-                </div>
+            
+
             </div>
         </div>
     </div>
