@@ -1,7 +1,7 @@
 
 from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField,SubmitField, StringField, PasswordField, SelectField, DecimalField, IntegerField
-from wtforms.validators import InputRequired, Length, Email, EqualTo
+from wtforms.validators import InputRequired, Length, Email, EqualTo, NumberRange
 from flask_wtf.file import FileRequired, FileField, FileAllowed
 from .submitFields import getListContents
 
@@ -32,13 +32,13 @@ class RegisterForm(FlaskForm):
 
 class ItemForm(FlaskForm):
     title = StringField('Title', validators=[InputRequired()])
-    teaName = StringField('Ingredients', validators=[InputRequired()])
+    teaName = StringField('Ingredients (Comma Seperated)', validators=[InputRequired()])
     country = SelectField('Country of Origin', choices=getListContents('countries'), validators=[InputRequired()])
     oxidation = SelectField('Oxidation', choices=getListContents('oxides'), validators=[InputRequired()])
     packingType = SelectField('Packing', choices=getListContents('packing'), validators=[InputRequired()])
-    weight = DecimalField('Weight',places=3, validators=[InputRequired()])
+    weight = DecimalField('Weight (Grams)',places=3, validators=[InputRequired(), NumberRange(0,99999)])
     photos = FileField('Add Photos', validators=[FileRequired(message='An image must be selected.'), FileAllowed(ALLOWED_IMAGE_TYPES, message='Valid image types are png, jpg, jpeg, PNG, JPG, and JPEG')])
     description = TextAreaField('Description', validators=[InputRequired()])
-    startBid = DecimalField('Starting Bid',places=3,validators=[InputRequired()])
-    duration = IntegerField('Auction Duration (Hours)', validators=[InputRequired()])
+    startBid = DecimalField('Starting Bid',places=3,validators=[InputRequired(), NumberRange(0,9999)])
+    duration = IntegerField('Auction Duration (Hours)', validators=[InputRequired(), NumberRange(0,9999)])
     submit = SubmitField('Submit')
