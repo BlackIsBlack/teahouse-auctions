@@ -21,7 +21,6 @@ class Watchlist(db.Model):
     date_added =  db.Column(db.DateTime, default=datetime.now(), nullable=False)
     total_bids = db.Column(db.Integer, db.ForeignKey('auctionListing.total_bids'), nullable=False)
     bid_status = db.Column(db.Integer, db.ForeignKey('auctionListing.bid_status'), nullable=False)
-    highest_bid = db.Column(db.Float, nullable=False)
 
 class Bid(db.Model):
     __tablename__ = 'bid'
