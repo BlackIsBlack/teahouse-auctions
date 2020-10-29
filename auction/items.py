@@ -34,8 +34,9 @@ def display(id):
     if(current_user.is_authenticated):
       if(current_user.id == currentItem.user_id):
         bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
-      
-    return render_template('items/details.html', auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList)
+    
+    ingredientList = currentItem.tea_name.split(',')
+    return render_template('items/details.html', auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList, ingredients=ingredientList)
   except:
     return render_template('errorpage.html')
 

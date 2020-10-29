@@ -85,8 +85,22 @@
                     <h4>Item Description</h4>
                 </div>
                 <div class="card-body">
-                    <h4>Auctioned By: {{username}}</h4> 
-                    <p>{{auctionListing.description}}</p>
+                    <div class="row">
+                        <div class="col-8">
+                            <h4>Auctioned By: {{username}}</h4> 
+                            <p>{{auctionListing.description}}</p>
+                        </div>
+                        <div class="col">
+                            <b>Ingredients:</b><br> 
+                            <ul>
+                                {% for ingredient in ingredients %}
+                                <li>{{ingredient}}</li>
+                                {%endfor%}
+
+                            </ul>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
