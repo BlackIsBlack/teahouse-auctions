@@ -34,8 +34,9 @@ def display(id):
     if(current_user.is_authenticated):
       if(current_user.id == currentItem.user_id):
         bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
-      
-    return render_template('items/details.html', auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList)
+    
+    ingredientList = currentItem.tea_name.split(',')
+    return render_template('items/details.html', auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList, ingredients=ingredientList)
   except:
     return render_template('errorpage.html')
 
@@ -58,7 +59,7 @@ def watchlist(id):
     if(currentItem.id == item.item_id):
       inWatchlist = True
   if(inWatchlist == False):
-    watchlistItem = Watchlist(item_id=currentItem.id, user_id=current_user.id, date_added=datetime.now(), total_bids=currentItem.total_bids, bid_status=currentItem.bid_status, highest_bid=currentItem.current_bid)
+    watchlistItem = Watchlist(item_id=currentItem.id, user_id=current_user.id, date_added=datetime.now(), total_bids=currentItem.total_bids, bid_status=currentItem.bid_status)
     db.session.add(watchlistItem)
     db.session.commit()
   return(redirect(url_for('main.watchlist')))
