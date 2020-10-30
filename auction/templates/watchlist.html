@@ -1,61 +1,87 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div style="padding:15px" class="col">
-        <div class="listing card">
-            <div class="card-header">
-                <h4>My Watchlist</h4>
-                <form class="form-inline">
-                    <label style="padding-right:10px;" for="sortBy">Sort By:</label>
-                    <select style="width: auto" id="sortBy" name="sortBy" class="form-control">
-                        <option value="1">Bids (High to Low)</option>
-                        <option value="2">Bids (Low to High)</option>
-                        <option value="3">Current Bid (High to Low)</option>
-                        <option value="4">Current Bid (Low to High)</option>
-                        <option value="5">New</option>
-                    </select>
+<div style="padding:15px" class="col">
+    <div class="listing card">
+        <div class="card-header">
+            <h4>My Watchlist</h4>
+            <form class="form-inline">
+                <label style="padding-right:10px;" for="sortBy">Sort By:</label>
+                <select style="width: auto" id="sortBy" name="sortBy" class="form-control">
+                    <option value="1">Bids (High to Low)</option>
+                    <option value="2">Bids (Low to High)</option>
+                    <option value="3">Current Bid (High to Low)</option>
+                    <option value="4">Current Bid (Low to High)</option>
+                    <option value="5">New</option>
+                </select>
 
-                </form>
+            </form>
 
 
-            </div>
-            {% for item in items %}
-            <div class="card-block listed-item">
-                <div class="row">
-                    <div class="col-lg">
-                        <div class="row">
+        </div>
+        {% for item in items %}
+        <div class="card-block listed-item">
+            <div class="row">
+                <div class="col-lg">
+                    <div class="row">
 
-                            <div class="col">
-                                <h5>{{item.title}}</h5>
-                                <p><strong>Origin: </strong>{{item.origin_country}}<br>
-                                    <strong>Oxidation: </strong>{{item.oxidation}}<br>
-                                    <strong>Packing: </strong>{{item.packing}}<br><br>
-                                    <strong>Current Bid: </strong>${{item.highest_bid}}<u>(14 Bids)</u>
-                                </p>
-                                <a href="/tea/{{item.id}}" class="btn btn-default item-btn">View Item</a>
-                            </div>
-                            <div class="col">
-                                <h5>Watchlist Information:</h5>
-                                <p><strong>Added on: </strong> {{item.date_added}}<br>
-                                    <strong>Ending: </strong> 14/10/2020 8:00am<br>
-                                    <strong>Bid Status: </strong> Winning
+                        <div class="col">
+                            <h5>{{item.title}}</h5>
+                            <p><strong>Origin: </strong>{{item.origin_country}}<br>
+                                <strong>Oxidation: </strong>{{item.oxidation}}<br>
+                                <strong>Packing: </strong>{{item.packing}}<br><br>
+                                <strong>Current Bid: </strong>${{item.current_bid}} (<u>{{item.total_bids}} Bids</u>)
+                            </p>
+                            <a href="/tea/{{item.id}}" class="btn btn-default item-btn">View Item</a>
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                data-target="#tea{{item.id}}">
+                                Remove From Watchlist
+                            </button>
 
-                                </p>
-                            </div>
+                        </div>
+                        <div class="col">
+                            <h5>Watchlist Information:</h5>
+                            <p><strong>Added on: </strong> {{item.date_added}}<br>
+                                <strong>Ending: </strong> 14/10/2020 8:00am<br>
+                                <strong>Bid Status: </strong> Winning
+
+                            </p>
                         </div>
                     </div>
-                    <div class="col">
-                        <img class="product-img" src="{{item.photos_url}}">
-                    </div>
+                </div>
+                <div class="col">
+                    <img class="product-img" src="{{item.photos_url}}">
                 </div>
             </div>
-            {% endfor %}
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% for item in items %}
+<div class="modal fade" id="tea{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Remove From Watchlist</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure that you want to remove '{{item.title}}' from your watchlist?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="tea/watchlist/remove/{{item.id}}" class="btn btn-primary">Confirm</a>
+            </div>
         </div>
     </div>
-
-    <style>
-        .carousel-item {
-            background-color: var(--darker);
-        }
-    </style>
+</div>
+{% endfor %}
+<style>
+    .carousel-item {
+        background-color: var(--darker);
+    }
+</style>
 {% endblock %}
-    

@@ -36,13 +36,13 @@ class ItemForm(FlaskForm):
     country = SelectField('Country of Origin', choices=getListContents('countries'), validators=[InputRequired()])
     oxidation = SelectField('Oxidation', choices=getListContents('oxides'), validators=[InputRequired()])
     packingType = SelectField('Packing', choices=getListContents('packing'), validators=[InputRequired()])
-    weight = DecimalField('Weight (Grams)',places=3, validators=[InputRequired(), NumberRange(0,99999)])
+    weight = DecimalField('Weight (Grams)',places=3, validators=[InputRequired(), NumberRange(1,99999)])
     photos = FileField('Add Photos', validators=[FileRequired(message='An image must be selected.'), FileAllowed(ALLOWED_IMAGE_TYPES, message='Valid image types are png, jpg, jpeg, PNG, JPG, and JPEG')])
     description = TextAreaField('Description', validators=[InputRequired()])
-    startBid = DecimalField('Starting Bid',places=3,validators=[InputRequired(), NumberRange(0,9999)])
-    duration = IntegerField('Auction Duration (Hours)', validators=[InputRequired(), NumberRange(0,9999)])
+    startBid = DecimalField('Starting Bid',places=3,validators=[InputRequired(), NumberRange(1,9999)])
+    duration = IntegerField('Auction Duration (Hours)', validators=[InputRequired(), NumberRange(1,9999)])
     submit = SubmitField('Submit')
 
 class BidForm(FlaskForm):
-    bidAmount = StringField('Bid Amount', validators=[InputRequired()])
+    bidAmount = DecimalField('Bid Amount',places=2, validators=[InputRequired(), NumberRange(1,9999)])
     submit = SubmitField('Place Bid')

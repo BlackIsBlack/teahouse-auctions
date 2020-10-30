@@ -72,9 +72,11 @@
                             <a style="width: 180px;" href="#" class="btn btn-default item-btn" data-toggle="modal"
                                 data-target="#staticBackdrop">Place a Bid</a>
                         </div>
+                        {% if watchlistExists == False%}
                         <div class="detail-btn row justify-content-end">
                             <a style="width: 180px;" href="/tea/{{auctionListing.id}}/watchlist" class="btn btn-default item-btn">Add To Watchlist</a>
                         </div>
+                        {% endif %}
                     </div>
                     {% endif %}
                 </div>
@@ -155,10 +157,9 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                    <h5>Kenyan Cinnamon Tea</h5><br>
-                    <b>Time Left: </b>19h 32min<br>
-                    <b>Current Bid: </b>{{auctionListing.highest_bid}}<br>
-                    <b>Shipping: </b>$4.99
+                    <h5>{{auctionListing.title}}</h5>
+                    <b>Time Left: </b>{{timeLeft}}<br>
+                    <b>Current Bid: </b>${{auctionListing.current_bid}}
 
                     </p>
                     {{wtf.quick_form(form)}}

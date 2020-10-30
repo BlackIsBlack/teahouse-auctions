@@ -38,11 +38,17 @@ def display(id):
     # fetch bidlist if it's the owner
     bidList = []
 
+    # Holds whether or not the person has this item within their watchlist
+    watchlistExists = False
     if (current_user.is_authenticated):
 
         if (current_user.id == currentItem.user_id):
 
             bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
+
+        # If the item is in the person's watchlist, do not show the button
+        if (Watchlist.query.filter_by(user_id=current_user.id).filter_by(item_id=id).first()):
+          watchlistExists = True
     
     # compile ingredient list
     ingredientList = currentItem.tea_name.split(',')
@@ -71,8 +77,9 @@ def display(id):
           else:
 
               print("error") # gotta do something here
+    
 
-    return render_template('items/details.html', form=form, auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList, ingredients=ingredientList)
+    return render_template('items/details.html', form=form, auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList, ingredients=ingredientList, watchlistExists = watchlistExists)
 
 
 
