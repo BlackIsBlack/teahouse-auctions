@@ -73,13 +73,23 @@
                             <a style="width: 180px;" href="#" class="btn btn-default item-btn" data-toggle="modal"
                                 data-target="#staticBackdrop">Place a Bid</a>
                         </div>
+                        
                         {% endif %}
                         {% if watchlistExists == False%}
                         <div class="detail-btn row justify-content-end">
                             <a style="width: 180px;" href="/tea/{{auctionListing.id}}/watchlist" class="btn btn-default item-btn">Add To Watchlist</a>
                         </div>
                         {% endif %}
+                    
                     </div>
+                    {% else %}
+                    <div class="col">
+                        <div class="detail-btn row justify-content-end">
+                            <a style="width: 180px;" href="/login" class="btn btn-default item-btn">Place a Bid</a>
+                        </div>
+                    </div>
+                        
+                    
                     {% endif %}
                 </div>
             </div>
