@@ -338,6 +338,8 @@
             <div class="listing card">
                 <div class="card-header">
                     <h4>Active Listings </h4>
+                    <div class="row">
+                       <div class="col">
                         <label style="padding-right:10px;" for="sortBy">Sort By:</label>
                         <select style="width: auto" id="sortBy" name="sortBy" class="form-control">
                             <option value="1">Newest</option>
@@ -347,7 +349,13 @@
                             <option value="5">Current Bid (High to Low)</option>
                             <option value="6">Current Bid (Low to High)</option>
                         </select>
-                        <input style = "margin-left:10px;" type="submit" class="btn btn-default" value="Sort">
+                    </div>
+                        <div class="col">
+                            <input style = "margin-left:10px;" type="submit" class="btn btn-default" value="Sort">
+                        </div> 
+                    </div>
+
+                    
 
                     </form>
                 </div>

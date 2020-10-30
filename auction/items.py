@@ -21,10 +21,8 @@ def check_upload_file(form):
   fp.save(upload_path)
   return db_upload_path
 
-@bp.route('/<id>', methods = ['GET','POST'])
+@bp.route('/<int:id>', methods = ['GET','POST'])
 def display(id):
-  # try:
-
     currentItem = auctionListing.query.filter_by(id=id).first()
 
     # Check/Update bid status to show Remaining Time on bid
@@ -43,19 +41,17 @@ def display(id):
     ingredientList = currentItem.tea_name.split(',')
 
     form = BidForm()
-    print("yeet")
     if form.validate_on_submit():
         bidQuery = Bid(user_id = current_user.id, listing_id = currentItem.id, bid_amount = form.bidAmount.data, bid_time = datetime.now(), bid_status = 1)
         db.session.add(bidQuery)
         db.session.commit()
+        return redirect(url_for('tea.display',id=currentItem.id))
 
     return render_template('items/details.html', form=form, auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList, ingredients=ingredientList)
-  # except:
-  #   return render_template('errorpage.html')
 
 
 # Item delete function
-@bp.route('/<id>/delete')
+@bp.route('/<int:id>/delete')
 @login_required
 def delete(id):
   # Query the current item
@@ -69,7 +65,7 @@ def delete(id):
 
 
 # User Watchlist page function
-@bp.route('/<id>/watchlist')
+@bp.route('/<int:id>/watchlist')
 @login_required
 def watchlist(id):
   # Queries to store information on the currentntly viewing item and the items in the watchlist
@@ -93,7 +89,7 @@ def watchlist(id):
 
 
 # Remove from watchlist function
-@bp.route('/watchlist/remove/<id>')
+@bp.route('/watchlist/remove/<int:id>')
 @login_required
 def remove(id):
   # Queries the current item from the watchlist
