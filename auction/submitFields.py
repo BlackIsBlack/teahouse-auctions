@@ -75,4 +75,20 @@ def getSortOrder(request):
         return "asc(auctionListing.current_bid"
     # If for some reason the sort order isn't one of these option, return the newst option.
     return "desc(auctionListing.start_time)"
+
+def getWatchlistSortOrder(request):
+    # Get the sort order field
+    sortOrder = request.args.get('sortBy')
+
+    # Depending on the selection, return a different query
+    if(sortOrder == '1'):
+        return "desc(Watchlist.date_added)"
+    if(sortOrder == '2'):
+        return "asc(Watchlist.date_added)"
+    if(sortOrder == '3'):
+        return "desc(Watchlist.total_bids)"
+    if(sortOrder == '4'):
+        return "asc(Watchlist.total_bids)"
+    # If for some reason the sort order isn't one of these option, return the newst option.
+    return "desc(Watchlist.date_added)"
     

@@ -45,6 +45,25 @@ def display(id):
         if (current_user.id == currentItem.user_id):
 
             bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
+        else:
+          if form.validate_on_submit():
+            
+            # bid must be higher than current bid
+            if ((int)(form.bidAmount.data) > currentItem.current_bid):
+
+                # setup query
+                bidQuery = Bid(user_id = current_user.id, listing_id = currentItem.id, bid_amount = form.bidAmount.data, bid_time = datetime.now(), bid_status = 1)
+                db.session.add(bidQuery)
+                db.session.commit()
+
+                # modify auctionlisting's current bid to equal bid amount 
+                currentItem.current_bid = form.bidAmount.data
+                db.session.query(auctionListing).filter(auctionListing.id == currentItem.id).update({"current_bid": currentItem.current_bid})
+                db.session.commit()
+            
+            else:
+
+                print("error") # gotta do something here
 
         # If the item is in the person's watchlist, do not show the button
         if (Watchlist.query.filter_by(user_id=current_user.id).filter_by(item_id=id).first()):
@@ -54,30 +73,6 @@ def display(id):
     ingredientList = currentItem.tea_name.split(',')
 
     form = BidForm()
-
-    # placing a bid
-    if (current_user.id == currentItem.user_id): # check user isn't the same as item's owner
-  
-      # form has been submitted
-      if form.validate_on_submit():
-          
-          # bid must be higher than current bid
-          if ((int)(form.bidAmount.data) > currentItem.current_bid):
-
-              # setup query
-              bidQuery = Bid(user_id = current_user.id, listing_id = currentItem.id, bid_amount = form.bidAmount.data, bid_time = datetime.now(), bid_status = 1)
-              db.session.add(bidQuery)
-              db.session.commit()
-
-              # modify auctionlisting's current bid to equal bid amount 
-              currentItem.current_bid = form.bidAmount.data
-              db.session.query(auctionListing).filter(auctionListing.id == currentItem.id).update({"current_bid": currentItem.current_bid})
-              db.session.commit()
-          
-          else:
-
-              print("error") # gotta do something here
-    
 
     return render_template('items/details.html', form=form, auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList, ingredients=ingredientList, watchlistExists = watchlistExists)
 

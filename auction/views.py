@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request
 from sqlalchemy import desc, asc
 from .models import auctionListing, Watchlist
 from flask_login import login_required, current_user
-from .submitFields import getURLParams, getSortOrder
+from .submitFields import getURLParams, getSortOrder, getWatchlistSortOrder
 bp = Blueprint('main', __name__)
 
 
@@ -29,7 +29,8 @@ def index():
 def watchlist():
     # The watchlist DB is queried for all items belonging to the logged in user.
     watchlistItems = Watchlist.query.filter_by(user_id=current_user.id)
-
+    if(len(request.args)>0):
+        watchlistItems = eval(f"Watchlist.query.filter_by(user_id=current_user.id).order_by({getWatchlistSortOrder(request)})")
     watchlistedAuctionItems = []
     # All the watchlist items are compared againsted the auctionListing db and added to a list to be displayed.
     for item in watchlistItems:

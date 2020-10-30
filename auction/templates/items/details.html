@@ -66,12 +66,14 @@
                             {% endif %}
                         </p>
                     </div>
-                    {% if auctionListing.bid_status == 1 %}
+                    {% if auctionListing.bid_status == 1 and current_user.is_authenticated%}
                     <div class="col">
+                        {% if current_user.id != auctionListing.user_id %}
                         <div class="detail-btn row justify-content-end">
                             <a style="width: 180px;" href="#" class="btn btn-default item-btn" data-toggle="modal"
                                 data-target="#staticBackdrop">Place a Bid</a>
                         </div>
+                        {% endif %}
                         {% if watchlistExists == False%}
                         <div class="detail-btn row justify-content-end">
                             <a style="width: 180px;" href="/tea/{{auctionListing.id}}/watchlist" class="btn btn-default item-btn">Add To Watchlist</a>
