@@ -40,6 +40,8 @@ def display(id):
     form = BidForm()
     # Holds whether or not the person has this item within their watchlist
     watchlistExists = False
+
+    errorStatus = 0
     if (current_user.is_authenticated):
 
         if (current_user.id == currentItem.user_id):
@@ -62,7 +64,7 @@ def display(id):
                 db.session.commit()
             
             else:
-
+                errorStatus = 1
                 print("error") # gotta do something here
 
         # If the item is in the person's watchlist, do not show the button
@@ -74,8 +76,7 @@ def display(id):
 
     form = BidForm()
 
-    return render_template('items/details.html', form=form, auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList, ingredients=ingredientList, watchlistExists = watchlistExists)
-
+    return render_template('items/details.html', errorStatus=errorStatus, form=form, auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList, ingredients=ingredientList, watchlistExists = watchlistExists)
 
 
 # Item delete function

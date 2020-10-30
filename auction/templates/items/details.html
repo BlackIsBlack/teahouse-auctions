@@ -65,6 +65,7 @@
                             Winning Bid: <b>${{auctionListing.current_bid}}</b>
                             {% endif %}
                         </p>
+                        
                     </div>
                     {% if auctionListing.bid_status == 1 and current_user.is_authenticated%}
                     <div class="col">
@@ -88,11 +89,16 @@
                             <a style="width: 180px;" href="/login?next=%2Ftea/{{auctionListing.id}}" class="btn btn-default item-btn">Place a Bid</a>
                         </div>
                     </div>
-                        
+                    {% endif %}
+                    
+                </div>
+                {% if errorStatus == 1 %}
+                    <b style="color:red;padding-left:40px">Your bid must be greater than the current auction's bid!</b>
+                    <!-- <b class="alert alert-danger ml-3 inline"></b> -->
                     
                     {% endif %}
-                </div>
             </div>
+            
         </div>
     </div>
     <div class="row" style="padding:10px 30px 0px 30px">
@@ -175,9 +181,8 @@
 
                     </p>
                     {{wtf.quick_form(form)}}
-
+                    
                 </div>
-            
 
             </div>
         </div>
