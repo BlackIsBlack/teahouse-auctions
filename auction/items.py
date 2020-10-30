@@ -37,7 +37,7 @@ def display(id):
 
     # fetch bidlist if it's the owner
     bidList = []
-
+    form = BidForm()
     # Holds whether or not the person has this item within their watchlist
     watchlistExists = False
     if (current_user.is_authenticated):
