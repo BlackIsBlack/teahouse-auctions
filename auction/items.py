@@ -20,34 +20,59 @@ def check_upload_file(form):
   fp.save(upload_path)
   return db_upload_path
 
+# specific item page
 @bp.route('/<id>', methods = ['GET','POST'])
 def display(id):
-  # try:
+    currentItem = auctionListing.query.filter_by(id=id).first() # get current item
+    remainingTime = (currentItem.end_time - datetime.now()) # get time
 
-    currentItem = auctionListing.query.filter_by(id=id).first()
-    remainingTime = (currentItem.end_time - datetime.now())
+    # close down auction
     if(remainingTime < timedelta(0)):
       currentItem.bid_status = 0
       db.session.commit()
+
+    # fetch username
     userName = User.query.filter_by(id=currentItem.user_id).first().username
 
+    # fetch bidlist if it's the owner
     bidList = []
-    if(current_user.is_authenticated):
-      if(current_user.id == currentItem.user_id):
-        bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
+
+    if (current_user.is_authenticated):
+
+        if (current_user.id == currentItem.user_id):
+
+            bidList = Bid.query.filter_by(listing_id = currentItem.id).order_by(desc(Bid.bid_time))
     
+    # compile ingredient list
     ingredientList = currentItem.tea_name.split(',')
 
     form = BidForm()
-    print("yeet")
-    if form.validate_on_submit():
-        bidQuery = Bid(user_id = current_user.id, listing_id = currentItem.id, bid_amount = form.bidAmount.data, bid_time = datetime.now(), bid_status = 1)
-        db.session.add(bidQuery)
-        db.session.commit()
+
+    # placing a bid
+    if (current_user.id == currentItem.user_id): # check user isn't the same as item's owner
+  
+      # form has been submitted
+      if form.validate_on_submit():
+          
+          # bid must be higher than current bid
+          if ((int)(form.bidAmount.data) > currentItem.current_bid):
+
+              # setup query
+              bidQuery = Bid(user_id = current_user.id, listing_id = currentItem.id, bid_amount = form.bidAmount.data, bid_time = datetime.now(), bid_status = 1)
+              db.session.add(bidQuery)
+              db.session.commit()
+
+              # modify auctionlisting's current bid to equal bid amount 
+              currentItem.current_bid = form.bidAmount.data
+              db.session.query(auctionListing).filter(auctionListing.id == currentItem.id).update({"current_bid": currentItem.current_bid})
+              db.session.commit()
+          
+          else:
+
+              print("error") # gotta do something here
 
     return render_template('items/details.html', form=form, auctionListing=currentItem, timeLeft=str(remainingTime)[:-7], username=userName, bidList=bidList, ingredients=ingredientList)
-  # except:
-  #   return render_template('errorpage.html')
+
 
 @bp.route('/<id>/delete')
 @login_required
