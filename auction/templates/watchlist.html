@@ -21,7 +21,7 @@
         {% for item in items %}
         <div class="card-block listed-item">
             <div class="row">
-                <div class="col-lg">
+                <div class="col-lg-5">
                     <div class="row">
 
                         <div class="col">
@@ -38,17 +38,9 @@
                             </button>
 
                         </div>
-                        <div class="col">
-                            <h5>Watchlist Information:</h5>
-                            <p><strong>Added on: </strong> {{item.date_added}}<br>
-                                <strong>Ending: </strong> 14/10/2020 8:00am<br>
-                                <strong>Bid Status: </strong> Winning
-
-                            </p>
-                        </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-lg">
                     <img class="product-img" src="{{item.photos_url}}">
                 </div>
             </div>

@@ -60,14 +60,15 @@
                     <div class="col">
                         <p style="padding-left:40px;" class="right-align">
                             {% if auctionListing.bid_status == 1 %}
-                            Current Bid: <b>${{auctionListing.current_bid}}</b>
+                            Current Bid: <b>${{auctionListing.current_bid}}</b> (<u>{{auctionListing.total_bids}} Bids</u>)
                             {% else %}
-                            Winning Bid: <b>${{auctionListing.current_bid}}</b>
+                            Winning Bid: <b>${{auctionListing.current_bid}}</b> (<u>{{auctionListing.total_bids}} Bids</u>)
                             {% endif %}
                         </p>
                         
                     </div>
-                    {% if auctionListing.bid_status == 1 and current_user.is_authenticated%}
+                    {% if auctionListing.bid_status == 1 %}
+                    {% if current_user.is_authenticated %}
                     <div class="col">
                         {% if current_user.id != auctionListing.user_id %}
                         <div class="detail-btn row justify-content-end">
@@ -80,7 +81,7 @@
                         <div class="detail-btn row justify-content-end">
                             <a style="width: 180px;" href="/tea/{{auctionListing.id}}/watchlist" class="btn btn-default item-btn">Add To Watchlist</a>
                         </div>
-                        {% endif %}
+                    {% endif %}
                     
                     </div>
                     {% else %}
@@ -89,6 +90,7 @@
                             <a style="width: 180px;" href="/login?next=%2Ftea/{{auctionListing.id}}" class="btn btn-default item-btn">Place a Bid</a>
                         </div>
                     </div>
+                    {% endif %}
                     {% endif %}
                     
                 </div>

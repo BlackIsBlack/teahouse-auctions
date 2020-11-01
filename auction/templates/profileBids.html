@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-3" style="padding-bottom: 40px;">
+        <div class="card" style="margin:20px;">
+            <img class="card-img-top" src="/static/image/profile.jpg">
+            <div class="card-body">
+                <h4 class="card-title">{{current_user.username}}</h5>
+                    <b>Email:</b> {{current_user.email}}<br>
+                    <b>Contact Number:</b> {{current_user.contact_number}}<br>
+                    <b>Address:</b> {{current_user.address}}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg" style="padding-bottom: 40px;">
+
+        <div class="card" style="margin:20px">
+            <h3 class="card-header">My Bids</h3>
+            <div class="card-body">
+                {% for bid in bids %}
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col">
+                            <h5>Item ID: {{bid.listing_id}}</h5>
+                            <p>
+                                <strong>Date/Time Bidded: </strong>{{bid.bid_time}}<br>
+                                <strong>Bid Value: </strong>${{bid.bid_amount}}
+                            </p>
+                        </div>
+                        <div class="col">
+                            <a href="/tea/{{bid.listing_id}}" class="btn btn-default item-btn">View Item</a>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

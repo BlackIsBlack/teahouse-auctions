@@ -55,6 +55,7 @@ def display(id):
 
                 # setup query
                 bidQuery = Bid(user_id = current_user.id, listing_id = currentItem.id, bid_amount = form.bidAmount.data, bid_time = datetime.now(), bid_status = 1)
+                currentItem.total_bids += 1
                 db.session.add(bidQuery)
                 db.session.commit()
 
@@ -88,6 +89,20 @@ def delete(id):
   # Delete the item if the user who added the item is the same as the logged in user
   if(current_user.id == currentItem.user_id):
     db.session.delete(currentItem)
+    db.session.commit()
+  # Return to the homepage
+  return (redirect(url_for('main.profile')))
+
+
+# Close auction function
+@bp.route('/<int:id>/close')
+@login_required
+def close(id):
+  # Query the current item
+  currentItem = auctionListing.query.filter_by(id=id).first()
+  # Delete the item if the user who added the item is the same as the logged in user
+  if(current_user.id == currentItem.user_id):
+    currentItem.bid_status = 0
     db.session.commit()
   # Return to the homepage
   return (redirect(url_for('main.profile')))
@@ -147,7 +162,7 @@ def sell():
         db_file_path=check_upload_file(form)
 
         # Generate and add the data the the auctionListing table in the database
-        teaItem = auctionListing(user_id=current_user.id, start_time=datetime.now(), end_time=(datetime.now()+hoursAdded), starting_bid=form.startBid.data, current_bid=0,photos_url=db_file_path,description= form.description.data, weight=form.weight.data,title=form.title.data,tea_name=form.teaName.data,origin_country=form.country.data,oxidation=form.oxidation.data,packing=form.packingType.data,bid_status=1,total_bids=0)
+        teaItem = auctionListing(user_id=current_user.id, start_time=datetime.now(), end_time=(datetime.now()+hoursAdded), starting_bid=form.startBid.data, current_bid=form.startBid.data,photos_url=db_file_path,description= form.description.data, weight=form.weight.data,title=form.title.data,tea_name=form.teaName.data,origin_country=form.country.data,oxidation=form.oxidation.data,packing=form.packingType.data,bid_status=1,total_bids=0)
         db.session.add(teaItem)
         db.session.commit()
 
